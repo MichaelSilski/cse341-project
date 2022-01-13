@@ -41,3 +41,10 @@
   width: 5rem;
   height: 5rem;
 }
+
+.error {
+  color: red;
+  border: solid 2px red;
+  padding: 5px;
+  width: fit-content;
+}
