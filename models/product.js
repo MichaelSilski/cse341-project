@@ -1,39 +1,42 @@
 const fetch = require('node-fetch');
 
-const productUrl = 'https://byui-cse.github.io/cse341-course/lesson03/items.json';
-
 module.exports = class Product {
-   constructor(tags, imageUrl, price, name, description) {
-      this.tags = tags;
-      this.imageUrl = imageUrl;
-      this.price = price;
-      this.name = name;
-      this.description = description;
-   }
+  constructor(tags, imageUrl, price, name, desc) {
+    this.tags = tags;
+    this.imageUrl = imageUrl;
+    this.price = price;
+    this.name = name;
+    this.desc = desc;
+  }
 
-   static fetchAll(cb) {
-      fetch(productUrl)
-         .then((res) => res.json())
-         .then((products) => cb(products))
-         .catch((err) => console.log(err));
-   }
+  static fetchall(cb) {
+    fetch("https://byui-cse.github.io/cse341-course/lesson03/items.json")
+    .then(response => response.json())
+    .then(jsonObj => {
+      // console.log(jsonObj);
+      cb(jsonObj);
+    });
+  };
 
-   static search(query, cb) {
-      fetch(productUrl)
-         .then((res) => res.json())
-         .then((products) => {
-            const filteredProducts = products.filter(product => {
-               let tagFound = false;
-               product.tags.forEach(tag => {
-                  if (tag.toLowerCase().includes(query)) 
-                     tagFound = true;
-               });
-               return tagFound ||
-                  product.name.toLowerCase().includes(query) ||
-                  product.description.toLowerCase().includes(query);
-            });
-            cb(filteredProducts);
-         })
-         .catch(err => console.log(err));
-   }
+  static search(query, cb) {
+    query = query.toLowerCase();
+
+    this.fetchall((products) => {
+      const filteredProducts = products.filter((prod) => {
+        const inName = prod.name.toLowerCase().includes(query);
+        const inDesc = prod.description.toLowerCase().includes(query);
+
+        let inTags = false;
+        for (let tag of prod.tags) {
+          if (tag.toLowerCase().includes(query)) {
+            inTags = true;
+          };
+        };
+
+        return (inName || inTags || inDesc);
+      });
+
+      cb(filteredProducts);
+    });
+  };
 };

@@ -1,5 +1,3 @@
-//TA02 PLACEHOLDER
-// Remember, you can make more of these placeholders yourself!
 const express = require('express');
 const router = express.Router();
 
@@ -13,42 +11,42 @@ router.get('/', (req, res, next) => {
     path: '/ta02', // For pug, EJS
     activeTA03: true, // For HBS
     contentCSS: true, // For HBS
-    users: userList,
+    users: userList, 
     error: {display: displayError, message: errorMessage}
   });
 });
 
 const userExists = (username) => {
-  for(let user of userList) {
-    if (user.userName == username) {
-      return true;
+  for (let user of userList) {
+    if (user.name == username) {
+      return true
     };
   }
   return false;
 }
 
 router.post('/addUser', (req, res, next) => {
-  let username = req.body.userName;
-  if(userExists(username)) {
+  let username = req.body.username;
+  if (userExists(username)){
     displayError = true;
-    errorMessage = `'${username} Already Exists'`;
+    errorMessage = `'${username}' Already Exists`
     res.redirect('/ta02');
   } else {
     displayError = false;
-    userList.push({userName: username});
+    userList.push({name: username});
     res.redirect('/ta02');
   }
 });
 
 router.post('/removeUser', (req, res, next) => {
   let username = req.body.removeName;
-  if(userExists(username)) {
+  if (userExists(username)) {
     displayError = false;
-    userList = userList.filter((user) => user.userName != username);
+    userList = userList.filter((user) => user.name != username)
     res.redirect('/ta02');
   } else {
     displayError = true;
-    errorMessage = `'${username} Does Not Exist'`;
+    errorMessage = `'${username}' Does Not Exist`;
     res.redirect('/ta02');
   }
 });

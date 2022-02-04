@@ -1,10 +1,11 @@
 //TA03 PLACEHOLDER
 const express = require('express');
 const router = express.Router();
-const ta03Controller = require('../controller/ta03');
 
-router.get('/', ta03Controller.getPage);
+const controllerTA03 = require('../controllers/controllerTA03');
 
-router.get('/search', ta03Controller.getSearchProducts);
+router.get('/', controllerTA03.getProducts);
+
+router.post('/', controllerTA03.searchProducts);
 
 module.exports = router;
