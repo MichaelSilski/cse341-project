@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../includes/nav.ejs %>
+  <div class="jumbotron text-center">
+    <div class="container"></div>
+</div>
+<div class="container">
+   <form action="/ta06/register" method="post">
+      <label for="email">Email: </label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password: </label>
+      <input type="password" id="password" name="password" required>
+      <label for="checkPass">Confirm Password: </label>
+      <input type="password" id="checkPass" name="checkPass" required>
+      <button type="submit">Register</button>
+   </form>
+</div>
+
+</body>
+
+</html>
